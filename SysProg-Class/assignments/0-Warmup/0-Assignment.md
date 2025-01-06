@@ -22,7 +22,7 @@ Please provide answers to these questions using markdown notation and place them
 1. Select with an `x` the platform you will be using for your course deliverables:
 
     - [ ] drexel's tux cluster
-    - [ ] WSL on Windows
+    - [**x**] WSL on Windows
     - [ ] Orbstack on MacOs
     - [ ] VMWare Fusion
     - [ ] Somthing else (put name here)
