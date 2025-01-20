@@ -1,0 +1,195 @@
+//Wordcountfun1.c Anthony Mayes
+//===========================================================================================
+//count words and spaces and boolean set to true
+//===========================================================================================
+
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+//#define SPACE = (' ');
+#define SIZE 60
+
+
+int main() {
+    char str[SIZE] = "Hello, World! Today Anthony Mayes";
+    int len = strlen(str);
+
+    // Using a for loop
+  //  for (int i = 0; i < len; i++) {
+//        printf("%c", str[i]); // Print each character
+    //}
+int i = 0;
+int t = 0;
+int wc = 0;
+char * ptr;
+int ch = ' ';
+int wordsc = 1;
+bool atBegWord = false;
+
+
+
+ptr = strchr(str, ch);
+    while (str[i] != '\0') {
+ atBegWord = true;
+        printf("%c", str[i]); // Print each character
+        i++;
+
+    if (str[i] == ch)
+      {
+        //wc = 1;
+        wc++;
+        wordsc = wc + 1;
+      }
+
+    }
+printf("\n");
+for (t = len - 1; t >=0; t--) {
+         printf("%c", str[t]);
+        }
+    printf("\n");
+    printf("number of spaces encounterd: %d\n",wc);
+    printf("number of words: %d\n",wordsc);
+    if (atBegWord = 1){
+          printf("atBegWord: true");
+                       }
+    printf("\n");
+    //printf("String Reversed : %s\n",strrev(str));
+     return 0;
+}
+// TODO: #1 What is the purpose of providing prototypes for
+//          the functions in this code module
+
+//TODO:  #1Answ:  To declare what functions will do and what arguments functions will take for input.
+
+===========================================================================================================
+
+//Wordcountfun2.c
+//=============================================================================================
+//list words in the array
+//=============================================================================================
+
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+//#define SPACE = (' ');
+#define SIZE 60
+#define SIZE2 60
+
+
+int main() {
+    char str[SIZE] = " Hello, World! Today Anthony Mayes ";
+    char str2[SIZE2] = "                                 ";
+    int len = strlen(str);
+
+    int i = 0;
+    int r = 0;//number of char in each word
+    int nw = 0;//number of word in list
+    int wc = 0;
+    char * ptr;
+    int ch = ' ';
+    int wordsc = 1;
+    bool atBegWord = false;
+
+ptr = strchr(str, ch);
+    while (str[i] != '\0') {
+        atBegWord = true;
+        str2[i] = str[i];
+        if (atBegWord = true != ch)
+ {
+             //printf("%d ",nw+1);
+            }
+        printf("%c", str[i]); // Print each character
+        i++;
+        r++;
+        atBegWord = false;
+
+    if (str[i] == ch)
+
+      {
+        r == i;
+        nw++;
+       if (atBegWord = true && ch)
+         {
+            printf("[%d] %c", nw, str[i]);
+         }
+       // printf("\n");
+        printf("(%d)\n",r-1);
+        wc++;
+        wordsc = wc + 1;
+        r=0;
+      }
+
+    }
+     return 0;
+}
+//TODO: #2. Call count_words, return of the result
+
+============================================================================================
+
+//Wordcountfun3.c
+//==================================================================================
+//Reverse the phrase
+//==================================================================================
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+//#define SPACE = (' ');
+#define SIZE 60
+
+
+int main() {
+    char str[SIZE] = "Hello, World! Today Anthony Mayes";
+    int len = strlen(str);
+
+
+int i = 0;
+int t = 0;
+int wc = 0;
+char * ptr;
+int ch = ' ';
+int wordsc = 1;
+bool atBegWord = false;
+
+
+
+ptr = strchr(str, ch);
+ while (str[i] != '\0') {
+  atBegWord = true;
+        printf("%c", str[i]);
+        i++;
+
+    if (str[i] == ch)
+      {
+        //wc = 1;
+        wc++;
+        wordsc = wc + 1;
+      }
+
+    }
+printf("\n");
+for (t = len - 1; t >=0; t--) {
+         printf("%c", str[t]);
+        }
+    printf("\n");
+    printf("number of spaces encounterd: %d\n",wc);
+    printf("number of words: %d\n",wordsc);
+    if (atBegWord = 1){
+          printf("atBegWord: true");
+                       }
+    printf("\n");
+
+     return 0;
+}
+//TODO: #3. Call reverse string using input_string
+            //input string should be reversed
+
+/*======================================================================================================
+These are all the small programs I was able to do without placing them into this program as functions...ran out of time to complet
+this assisgnment but feel comfortable that I could complete it with more time.  I am also familiar with the CASE statement as well just need a refresher.
+Thanks --- Anthony Mayes
+*/
+
+//======================================================================================================
