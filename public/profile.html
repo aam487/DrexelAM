@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile Page</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="profile">
-        <h2>Edit Profile</h2>
-        <label for="username">Username:</label>
-        <input type="text" id="username" placeholder="Enter your name">
-        <label for="email">Email:</label>
-        <input type="text" id="email" placeholder="Enter your email">
-        <label for="password">Password:</label>
-        <input type="password" id="password" placeholder="Enter new password">
-        
-        <label for="role">Role:</label>
-         <select>
-                    <option value="">Select Role</option>
-                    <option value="user">Reader</option>
-                    <option value="admin">Author</option>
-                    <option value="moderator">Moderator</option>
-                </select>
-        
-        <button id="saveProfile">Save Changes</button>
-        <button id="logout">Log Out</button>
-    </div>
+<div class="profile">
+    <h2>Edit Profile</h2>
+    <form>
+    <input type="text" id="username" placeholder="Enter your name">
+    
+    <input type="text" id="email" placeholder="Enter your email">
+
+    <input type="password" id="password" placeholder="Enter new password">
+    
+    <select>
+                <option value="">Select Role</option>
+                <option value="user">Reader</option>
+                <option value="admin">Author</option>
+                <option value="moderator">Moderator</option>
+            </select>
+    </form>
+    
+    
+    <button id="saveProfile" class="button" style ="margin-top: 10px;">Save Changes</button>
+    <button id="logout" class ="button1" style ="margin-top: 10px;" href="welcomepage.html">Log Out</button>
+</div>
 </body>
 </html>

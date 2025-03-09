@@ -4,133 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comment Thread</title>
-<style>
-body {
-  background-color: #EACBD2; 
-}
-
-label,
-textarea {
-  font-size: 0.8rem;
-  letter-spacing: 1px;
-}
-
-textarea {
-  padding: 10px;
-  max-width: 100%;
-  line-height: 1.5;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px #999;
-  margin-left: 10em;
-  margin-bottom: 2em;
-}
-
-label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-.button {
-  background-color: #EA4C89;
-  border-radius: 8px;
-  border-style: none;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  height: 40px;
-  line-height: 20px;
-  list-style: none;
-  margin: 0;
-  outline: none;
-  padding: 10px 16px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  transition: color 100ms;
-  vertical-align: baseline;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  margin-left: 10em;
-}
-
-.button:hover,
-.button:focus {
-  background-color: #F082AC;
-}
-
-input {
-  font-size: 0.8rem;
-  letter-spacing: 1px;
-}
-
-input {
-  padding: 10px;
-  max-width: 100%;
-  line-height: 1.5;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px #999;
-}
-
-input {
-  display: block;
-  margin-bottom: 10px;
-  margin-left: 10em;
-}
-
-table {
-  width: 80%;
-  margin: 2em auto;
-  border-collapse: collapse;
-}
-
-table, th, td {
-  border: 1px solid #9D8189;
-  padding: 10px;
-}
-
-th {
-  background-color:#F4ACB7;
-  text-align: left;
-}
-
-td {
-  background-color: #FFCAD4;
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <h1 style="text-align: center;">Welcome to the Comment Thread</h1>
 <p style="text-align: center;">Leave a comment!</p>
 
 <div>
-    <p> Name :  </p> <!-- retrieve it based on the logged in user since we are distinguishing the author and reader mode , if you have the author role only then it should allow you to post 
-    so here, retrieve the logged in use whose role is an author -->
-    <br>
-    <textarea id="comment" placeholder="What do you think?" required></textarea>
+  <p> Name :  </p> <!-- retrieve it based on the logged in user since we are distinguishing the author and reader mode , if you have the author role only then it should allow you to post 
+  so here, retrieve the logged in use whose role is an author -->
+  <br>
+  <textarea id="comment" placeholder="What do you think?" required></textarea>
 </div>
 
 <button id="submitComment" class="button" role="button">Save Comment</button>
-
 <h2 style="text-align: center;">Comments</h2>
 
 <table>
-  <thead>
-    <tr>
-      <th>Comments</th>
-    </tr>
-  </thead>
-  <tbody id="commentsTable">
-  </tbody>
+<thead>
+  <tr>
+    <th>Comments</th>
+  </tr>
+</thead>
+<tbody id="commentsTable">
+</tbody>
 </table>
 
+<div class="top-right-buttons">
+<button class="button3" id="viewProfile" href="profile.html">View Profile</button>
+<button class="button4" id="logout" href="welcomepage.html">Log Out</button>
+</div>
 </body>
 </html>
 
