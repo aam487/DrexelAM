@@ -22,7 +22,7 @@ form {
     flex-direction: column;
     gap: 15px;
     width: 100%;
-    max-width: 400px; /* Limit form width */
+    max-width: 400px; 
     padding: 20px;
 }
 
@@ -34,7 +34,7 @@ div {
 }
 
 textarea {
-    width: 80%;
+    width: 200%;
     height: 120px;
     padding: 10px;
     font-size: 1rem;
@@ -118,7 +118,7 @@ input,select {
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px #999;
     display: block;
-    margin-bottom: 15px;  /* Increased the space between inputs */
+    margin-bottom: 15px;  
     margin-left: 10em;
     padding: 10px;
     font-size: 1rem;
