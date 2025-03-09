@@ -116,5 +116,8 @@ module.exports = {
     // Delete a comment
     deleteComment: (comment_id, callback) => {
         db.run("DELETE FROM comments WHERE id = ?", [comment_id], callback);
-    }
+    },
+
+    // Expose raw database instance for custom queries
+    db: db
 };
