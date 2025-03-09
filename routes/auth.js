@@ -9,7 +9,7 @@ router.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'loginpage.html'));
 });
 
-// Process login credentials using plain text comparison
+// Process login credentials 
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
   // Retrieve user by name (or change to email if desired)
@@ -22,7 +22,7 @@ router.post('/login', (req, res) => {
     if (!user) {
       return res.status(401).send('Invalid credentials.');
     }
-    // Compare plain text password directly
+    // Compare password directly
     if (password === user.password) {
       req.session.user = user; // Save user data in session
       res.redirect('/'); // Redirect to home or dashboard as needed
@@ -37,10 +37,10 @@ router.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'signup.html'));
 });
 
-// Process user registration with plain text password storage
+// Process user registration with password storage
 router.post('/register', (req, res) => {
   const { username, email, password, role } = req.body;
-  // Directly store the password without hashing
+  // Store the password
   db.addUser(username, email, password, role, (err, user) => {
     if (err) {
       console.error(err);

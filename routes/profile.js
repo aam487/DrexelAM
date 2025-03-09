@@ -21,7 +21,7 @@ router.post('/', isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
 
   if (password) {
-    // Update profile including the new plain text password
+    // Update profile 
     const query = "UPDATE users SET name = ?, email = ?, password = ?, role = ? WHERE id = ?";
     db.db.run(query, [username, email, password, role, userId], function(err) {
       if (err) return res.status(500).send('Error updating profile.');
@@ -30,7 +30,7 @@ router.post('/', isAuthenticated, (req, res) => {
       res.redirect('/');
     });
   } else {
-    // Update without changing the password
+   
     const query = "UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?";
     db.db.run(query, [username, email, role, userId], function(err) {
       if (err) return res.status(500).send('Error updating profile.');

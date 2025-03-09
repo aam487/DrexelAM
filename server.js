@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configure session management
 app.use(session({
-  secret: 'your-secret-key', // Replace with a strong secret in production
+  secret: 'your-secret-key', 
   resave: false,
   saveUninitialized: false
 }));
