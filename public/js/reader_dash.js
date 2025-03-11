@@ -20,19 +20,19 @@ function loadBlogs() {
 		});
 }
 
-        function showCommentForm(blogId) {
+        function showCommentForm(blog_id) {
             document.getElementById('comment-form').style.display = 'block';
-            document.getElementById('add-comment-form').setAttribute('data-blog-id', blogId);
+            document.getElementById('add-comment-form').setAttribute('data-blog-id', blog_id);
         }
-
+		loadBlogs();
 		document.getElementById('add-comment-form')?.addEventListener('submit', function (event) {
 			event.preventDefault();
 		
 			const content = document.getElementById('comment-content').value;
-			const blogId = document.getElementById('add-comment-form').getAttribute('data-blog-id');
+			const blog_id = document.getElementById('add-comment-form').getAttribute('data-blog-id');
 		
 			// Check if content or blogId is invalid
-			if (!content || !blogId) {
+			if (!content || !blog_id) {
 				alert('Please provide valid content and blog ID');
 				return;
 			}
@@ -42,7 +42,7 @@ function loadBlogs() {
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ blogId, content })
+				body: JSON.stringify({ blog_id, content })
 			})
 			.then(response => {
 				if (response.ok) {
@@ -57,5 +57,4 @@ function loadBlogs() {
 				alert('Failed to create comment. Please try again later.');
 			});
 		});
-
 loadBlogs();
