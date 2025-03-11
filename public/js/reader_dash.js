@@ -42,7 +42,7 @@ function loadBlogs() {
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ content, blogId })
+				body: JSON.stringify({ blogId, content })
 			})
 			.then(response => {
 				if (response.ok) {
