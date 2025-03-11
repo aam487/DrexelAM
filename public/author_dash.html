@@ -8,12 +8,10 @@
 </head>
 <body>
     <h1>Welcome, Author</h1>
-	<h2>Blogs</h2>
     <button id="create-blog-button">Create New Blog</button>
 
-    <div id="create-blog-form" style="display:none;">
-        <h2>Create Blog</h2>
-        <form id="create-blog-form">
+	<div id="create-blog-container" style="display:none;">
+		<form id="create-blog-form">
             <label for="blog-title">Title</label><br>
             <input type="text" id="blog-title" name="title" required><br><br>
 
@@ -23,9 +21,8 @@
             <button type="submit">Create Blog</button>
         </form>
     </div>
-	<div id="blogs-list">
-        <!-- Dynamically loaded blogs will appear here -->
-    </div>
+	<h2>Blogs</h2>
+	<div id="blogs-list"></div>
     <script src="js/author_dash.js"></script>
 </body>
 </html>
