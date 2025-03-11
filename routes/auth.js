@@ -24,7 +24,8 @@ router.post('/login', (req, res) => {
     if (password === user.password) {
       req.session.user = user;
       // Redirect to blog page after successful login
-      res.redirect('/blog');
+      req.session.user = user; // Save session
+      res.json({ success: true, role: user.role }); // Return JSON response
     } else {
       res.status(401).send('Invalid credentials.');
     }
