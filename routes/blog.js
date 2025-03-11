@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const db = require('../db/database');
+const db = require('../database');
 
 // Middleware to check if a user is authenticated
 function isAuthenticated(req, res, next) {
@@ -11,6 +11,29 @@ function isAuthenticated(req, res, next) {
   }
   res.redirect('/auth/login');
 }
+
+// GET /blog/all - Retrieve all blogs with optional sorting
+
+router.get('/all', (req, res) => {
+  const sort = req.query.sort;
+  let query = `
+    SELECT b.*, COUNT(c.id) AS commentCount 
+    FROM blogs b 
+    LEFT JOIN comments c ON b.id = c.blog_id 
+    GROUP BY b.id 
+  `;
+  if (sort === 'comments') {
+    query += "ORDER BY commentCount DESC";
+  } else {
+    query += "ORDER BY b.created_at DESC";
+  }
+  db.db.all(query, [], (err, rows) => {
+    if (err) {
+      return res.status(500).send("Error retrieving blogs.");
+    }
+    res.json(rows);
+  });
+});
 
 // GET /blog/:id - Retrieve and display a single blog post along with its comments
 router.get('/:id', (req, res) => {
@@ -24,7 +47,6 @@ router.get('/:id', (req, res) => {
       if (err) {
         return res.status(500).send('Error retrieving comments.');
       }
-     
       res.json({ blog, comments });
     });
   });
@@ -41,7 +63,7 @@ router.post('/create', isAuthenticated, (req, res) => {
     if (err) {
       return res.status(500).send('Error creating blog.');
     }
-    res.redirect('/'); // Redirect to home or the new blog post page
+    res.redirect('/blog'); // Redirect to blog dashboard
   });
 });
 
@@ -49,7 +71,6 @@ router.post('/create', isAuthenticated, (req, res) => {
 router.post('/edit/:id', isAuthenticated, (req, res) => {
   const blogId = req.params.id;
   const { title, content } = req.body;
-  // Check if the logged-in user owns the blog
   db.db.get("SELECT * FROM blogs WHERE id = ?", [blogId], (err, blog) => {
     if (err || !blog) {
       return res.status(404).send('Blog not found.');
@@ -57,7 +78,6 @@ router.post('/edit/:id', isAuthenticated, (req, res) => {
     if (blog.author_id !== req.session.user.id) {
       return res.status(403).send('Not authorized to edit this blog.');
     }
-    // Update blog details
     const query = "UPDATE blogs SET title = ?, content = ? WHERE id = ?";
     db.db.run(query, [title, content, blogId], function(err) {
       if (err) {
@@ -88,21 +108,29 @@ router.post('/delete/:id', isAuthenticated, (req, res) => {
 });
 
 // POST /blog/comment - Add a comment to a blog post
+
 router.post('/comment', isAuthenticated, (req, res) => {
   const { blog_id, content } = req.body;
-  const user_id = req.session.user.id;
-  db.addComment(blog_id, user_id, content, (err, comment) => {
-    if (err) {
-      return res.status(500).send('Error adding comment.');
+  // Check if the blog exists
+  db.db.get("SELECT * FROM blogs WHERE id = ?", [blog_id], (err, blog) => {
+    if (err || !blog) {
+      return res.status(404).send('Blog not found.');
     }
-    res.redirect(`/blog/${blog_id}`);
+    const user_id = req.session.user.id;
+    db.addComment(blog_id, user_id, content, (err, comment) => {
+      if (err) {
+        return res.status(500).send('Error adding comment.');
+      }
+      // Respond with JSON so the client can refresh the comment list
+      res.json({ success: true, comment });
+    });
   });
 });
+
 
 // POST /blog/comment/delete/:id - Delete a comment (only if it belongs to the logged-in user)
 router.post('/comment/delete/:id', isAuthenticated, (req, res) => {
   const commentId = req.params.id;
-  // Retrieve the comment to check ownership
   db.db.get("SELECT * FROM comments WHERE id = ?", [commentId], (err, comment) => {
     if (err || !comment) {
       return res.status(404).send('Comment not found.');

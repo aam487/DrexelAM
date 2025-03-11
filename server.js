@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configure session management
 app.use(session({
-  secret: 'your-secret-key', 
+  secret: 'your-secret-key', // Use a strong secret for production
   resave: false,
   saveUninitialized: false
 }));
@@ -29,7 +29,16 @@ app.use('/auth', authRoutes);
 app.use('/blog', blogRoutes);
 app.use('/profile', profileRoutes);
 
-// Home route serves the welcome page
+// New route: If user is logged in, serve blog.html as the dashboard/blog page.
+app.get('/blog', (req, res) => {
+  if (req.session.user) {
+    res.sendFile(path.join(__dirname, 'public', 'blog.html'));
+  } else {
+    res.redirect('/auth/login');
+  }
+});
+
+// Home route: If not logged in, show the welcome page.
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'welcomepage.html'));
 });
