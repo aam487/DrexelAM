@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Welcome, Author</h1>
+	<h2>Blogs</h2>
+    <button id="create-blog-button">Create New Blog</button>
+
+    <div id="create-blog-form" style="display:none;">
+        <h2>Create Blog</h2>
+        <form id="create-blog-form">
+            <label for="blog-title">Title</label><br>
+            <input type="text" id="blog-title" name="title" required><br><br>
+
+            <label for="blog-content">Content</label><br>
+            <textarea id="blog-content" name="content" rows="5" required></textarea><br><br>
+
+            <button type="submit">Create Blog</button>
+        </form>
+    </div>
+	<div id="blogs-list">
+        <!-- Dynamically loaded blogs will appear here -->
+    </div>
+    <script src="js/author_dash.js"></script>
+</body>
+</html>
