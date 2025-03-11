@@ -11,26 +11,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = usernameInput.value.trim();
     const password = passwordInput.value;
 
-    try {
-      const response = await fetch("/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        // IMPORTANT: ensure credentials (cookies) are sent with the request
-        credentials: 'same-origin',
-        body: JSON.stringify({ username, password })
-      });
-      if (response.ok) {
-        // Redirect to blog page upon successful login.
-        window.location.href = "/blog";
-      } else {
-        const errorText = await response.text();
-        alert("Login failed: " + errorText);
-      }
+	try {
+        const response = await fetch('/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',  // Ensures cookies (for sessions) are sent
+            body: JSON.stringify({ username, password })
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || "Login failed.");
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            window.location.href = data.role === 'author' ? '/author_dash.html' : '/reader_dash.html';
+        } else {
+            const errorText = await response.text();
+			      alert("Login failed: " + errorText);
+        }
     } catch (error) {
-      console.error("Login error:", error);
-      alert("An error occurred during login. Please try again.");
+        console.error("Login error:", error);
+        alert("An error occurred during login. Please try again.");
     }
-  });
+});
 
   cancelButton.addEventListener("click", (e) => {
     e.preventDefault();
