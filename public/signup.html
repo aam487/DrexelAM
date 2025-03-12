@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account</title>
+    <title>Create Account - BlogHub</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="signup-box">
-            <h2>Sign Up</h2>
-            <form>
-                <input type="text" placeholder="Username" required>
-                <input type="email" placeholder="Email" required>
-                <select required>
+            <h1>Sign Up</h1>
+            <p class="text-center">Create an account to start your blogging journey</p>
+            <form id="signup-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <select id="role" required>
                     <option value="">Select Role</option>
-                    <option value="user">Reader</option>
-                    <option value="admin">Author</option>
+                    <option value="reader">Reader</option>
+                    <option value="author">Author</option>
                     <option value="moderator">Moderator</option>
                 </select>
-                <input type="password" placeholder="Password" required>
-                
-               
+                <input type="password" id="password" placeholder="Password" required>
+                <div class="action-buttons">
+                    <button type="submit" class="button">Register</button>
+                    <button type="button" class="button1" onclick="window.location.href='welcomepage.html'">Cancel</button>
+                </div>
             </form>
-            <button type="submit" class ="button" style ="margin-top: 10px;" href="blog.html">Register</button>
-            <button type="submit" class ="button1" style ="margin-top: 10px;" href="welcomepage.html">Cancel</button>
         </div>
     </div>
     <script src="js/signup.js"></script>
-
 </body>
 </html>

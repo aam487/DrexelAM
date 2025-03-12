@@ -3,26 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Here</title>
+    <title>Login - BlogHub</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="signup-box">
-			<!-- Login header -->
-            <h2>Login Here!</h2>
-			<!-- Form to login with username and password -->
-            <form>
-                <input type="text" placeholder="Username" required>
-                <input type="password" placeholder="Password" required>      
+            <h1>Login</h1>
+            <p class="text-center">Welcome back! Log in to continue your journey</p>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <div class="action-buttons">
+                    <button type="submit" class="button">Login</button>
+                    <button type="button" class="button1" onclick="window.location.href='welcomepage.html'">Cancel</button>
+                </div>
             </form>
-			<!-- Login button -->
-            <button type="submit" class = "button" style="margin-top: 10px;">Login</button>
-			<!-- Cancel login button -->
-            <button type="submit" class ="button1" style ="margin-top: 10px;" href="welcomepage.html">Cancel</button>
         </div>
     </div>
-	<!-- Login JS file -->
     <script src="js/login.js"></script>
 </body>
 </html>

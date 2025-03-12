@@ -2,28 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<!-- Blog details title -->
-    <title>Blog Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Details - BlogHub</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-	<!-- Container to hold the blog into: title, content, comments -->
-    <div class="blog-detail-container">
-        <h1 id="blog-title"></h1>
-        <p id="blog-content"></p>
-		<!-- Comments for specific blog -->
-        <div class="comment-section">
-            <h3>Comments</h3>
-            <div id="comments-list"></div>
-			<!-- Form to add a new comment -->
-            <h4>Add a Comment</h4>
-            <form id="add-comment-form">
-                <textarea id="comment-content" placeholder="Write your comment..."></textarea>
-                <button type="submit">Submit</button>
-            </form>
+    <div class="container">
+        <div class="blog-detail-container">
+            <h1 id="blog-title"></h1>
+            <div id="blog-content"></div>
+            
+            <!-- Comments section -->
+            <div class="comment-section">
+                <h3>Comments</h3>
+                <div id="comments-list"></div>
+                
+                <!-- Add comment form -->
+                <div class="add-comment">
+                    <h4>Add a Comment</h4>
+                    <form id="add-comment-form">
+                        <textarea id="comment-content" placeholder="Write your comment..."></textarea>
+                        <button type="submit" class="button">Submit</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="blog-actions">
+                <button class="button1" onclick="window.location.href='/'">Back to Home</button>
+            </div>
         </div>
-		<!-- Return home -->
-        <button class="button1" onclick="window.location.href='/'">Back to Home</button>
     </div>
     <script src="/js/blog.js"></script>
 </body>
