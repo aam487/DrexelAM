@@ -1,4 +1,5 @@
 // public/js/signup.js
+// event listener for form
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".signup-box form");
   const usernameInput = form.querySelector('input[placeholder="Username"]');
@@ -7,7 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordInput = form.querySelector('input[placeholder="Password"]');
   const registerButton = document.querySelector(".signup-box .button");
   const cancelButton = document.querySelector(".signup-box .button1");
-
+ 
+  // event listener for clicking register button
   registerButton.addEventListener("click", async (e) => {
     e.preventDefault();
     const username = usernameInput.value.trim();
@@ -33,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-	// check that the role is valid
+    // check that the role is valid
     if (role!="reader" && role!="author") {
       alert("Invalid role selected. Please choose either Reader or Author");
       return;
@@ -45,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // try to register user
     try {
       const response = await fetch("/auth/register", {
         method: "POST",
@@ -64,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // event listener for clicking cancel button to return to welcome page
   cancelButton.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "welcomepage.html";
