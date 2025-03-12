@@ -26,22 +26,19 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please enter a valid email address.");
       return;
     }
+    
     // Validate role: if empty or invalid, do not proceed
     if (!role) {
       alert("Please select a role.");
       return;
     }
-    // Map role values: "user" becomes "reader" and "admin" becomes "author"
-    const roleMapping = {
-      user: "reader",
-      admin: "author"
-    };
-    if (role === "moderator" || !roleMapping[role]) {
-      alert("Invalid role selected. Please choose either Reader or Author.");
+
+	// check that the role is valid
+    if (role!="reader" && role!="author") {
+      alert("Invalid role selected. Please choose either Reader or Author");
       return;
     }
-    role = roleMapping[role];
-
+    
     // Validate password (minimum 6 characters)
     if (password.length < 6) {
       alert("Password must be at least 6 characters long.");
