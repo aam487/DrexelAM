@@ -7,22 +7,27 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+	<!-- Author dashboard header -->
     <h1>Welcome, Author</h1>
+	<!-- Button to create a new blog -->
     <button id="create-blog-button">Create New Blog</button>
-
+	<!-- Form for creating a blog with title and content -->
 	<div id="create-blog-container" style="display:none;">
 		<form id="create-blog-form">
             <label for="blog-title">Title</label><br>
             <input type="text" id="blog-title" name="title" required><br><br>
-
             <label for="blog-content">Content</label><br>
             <textarea id="blog-content" name="content" rows="5" required></textarea><br><br>
-
+			<!-- Submit blog -->
             <button type="submit">Create Blog</button>
         </form>
     </div>
+	<!-- List of blogs to display in dashboard -->
 	<h2>Blogs</h2>
 	<div id="blogs-list"></div>
-    <script src="js/author_dash.js"></script>
+	<!-- Option to logout and return to welcome page -->
+	<button id="logout" class ="button1" style ="margin-top: 10px;" href="welcomepage.html">Log Out</button>
+    <!-- Author dashboard JS file -->
+	<script src="js/author_dash.js"></script>
 </body>
 </html>
