@@ -7,21 +7,26 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+	<!-- Reader header -->
     <h1>Welcome, Reader</h1>
-    <div id="blogs-list">
-        <h2>Blogs</h2>
-        <!-- Dynamically loaded blogs will appear here -->
-    </div>
-
+	<!-- Blogs header -->
+     <h2>Blogs</h2>
+     <!-- Blogs will appear here -->
+	<div id="blogs-list"></div>
+	<!-- Form for users to comment -->
     <div id="comment-form" style="display:none;">
         <h2>Add a Comment</h2>
         <form id="add-comment-form">
             <label for="comment-content">Comment</label><br>
             <textarea id="comment-content" name="content" rows="3" required></textarea><br><br>
-
+			<!-- Submit comment -->
             <button type="submit">Add Comment</button>
+			<button id="Cancel" type="submit">Add Comment</button>
         </form>
     </div>
+	<!-- Option to logout and return to welcome page -->
+	<button id="logout" class ="button1" style ="margin-top: 10px;" href="welcomepage.html">Log Out</button>
+	<!-- Reader dashboard JS file -->
 	<script src="js/reader_dash.js"></script>
 </body>
 </html>
