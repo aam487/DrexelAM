@@ -8,15 +8,16 @@
 </head>
 <body>
     <div class="container">
+        <!-- Welcome message header -->
         <h1>Welcome, Author</h1>
         <p class="text-center">Create and manage your blog posts</p>
-        
+        <!-- Create blog button -->
         <div class="dashboard-content">
             <div class="dashboard-actions">
                 <button id="create-blog-button" class="button">Create New Blog</button>
             </div>
             
-            <!-- Form for creating a blog - hidden by default -->
+            <!-- Form for creating a blog with title and content -->
             <div id="create-blog-container" style="display:none;">
                 <h2>Create New Blog Post</h2>
                 <form id="create-blog-form">
@@ -25,18 +26,18 @@
                     
                     <label for="blog-content">Content</label>
                     <textarea id="blog-content" name="content" rows="5" required></textarea>
-                    
+                    <!-- Buttons to submit or cancel -->
                     <div class="action-buttons">
                         <button type="submit" class="button">Create Blog</button>
                         <button type="button" id="cancel-blog" class="button1">Cancel</button>
                     </div>
                 </form>
             </div>
-            
+            <!-- List of author's blogs -->
             <h2>Your Blogs</h2>
             <!-- Author's blogs will display in a responsive grid -->
             <div id="blogs-list"></div>
-            
+            <!-- Logout and go to welcome page -->
             <div class="dashboard-actions">
                 <button id="logout" class="button1" onclick="window.location.href='welcomepage.html'">Log Out</button>
             </div>
