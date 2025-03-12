@@ -175,7 +175,7 @@ input,select {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	width: 100%;
     max-height: 100vh; /* Ensures content doesn't disappear */
-    overflow-y: auto;  /* Enables scrolling if content overflows */
+    overflow: auto;  /* Enables scrolling if content overflows */
 }
 /* blogs listed as cards with info formatting */
 .blog-card {
@@ -214,4 +214,34 @@ input,select {
 
 .read-more-btn:hover {
     background-color: #661f3a;
+}
+.blog-detail-container {
+	width: 100%;
+	background-color: #ffffff;
+	border: 1px solid #050505;
+	margin-top: 20px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 1200px;
+    margin: 50px auto;
+    overflow-y: auto;
+}
+
+.blog-detail-container h1 {
+	margin-top: 20px;
+    color: #a83260;
+    margin-bottom: 20px;
+}
+
+.comment-section {
+    margin-top: 40px;
+}
+
+.comment-card {
+    background-color: #ffcad4;
+    padding: 10px;
+    border: 1px solid #9d8189;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
