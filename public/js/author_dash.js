@@ -50,15 +50,17 @@ function loadBlogs() {
                 const blogElement = document.createElement('div');
                 blogElement.className = 'blog-card'; 
                 blogElement.innerHTML = `
-                    <div class="blog-content">
-                        <h3>${blog.title}</h3>
-                        <p>${blog.content.substring(0, 150)}...</p>
-                        <button class="read-more-btn" onclick="window.location.href='/blog.html?id=${blog.id}'">Read More</button>
-                    </div>
-                    <div class="blog-actions">
-                        <button class="button edit-blog" data-id="${blog.id}">Edit</button>
-                        <button class="button button1 delete-blog" data-id="${blog.id}">Delete</button>
-                    </div>`;
+    			<div class="blog-content">
+        			<h3>${blog.title}</h3>
+        			<p>${blog.content.substring(0, 150)}...</p>
+        			<p>Posted on: ${new Date(blog.created_at).toLocaleDateString()}</p>
+        			<button class="read-more-btn" onclick="window.location.href='/blog.html?id=${blog.id}'">Read More</button>
+    			</div>
+    			<div class="blog-actions">
+        			<button class="button edit-blog" data-id="${blog.id}">Edit</button>
+        			<button class="button button1 delete-blog" data-id="${blog.id}">Delete</button>
+    			</div>`;
+
                 blogsList.appendChild(blogElement);
             });
             

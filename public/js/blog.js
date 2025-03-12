@@ -4,40 +4,41 @@ const blogId = urlParams.get('id');
 
 // Fetch and display blog details
 function loadBlogDetails() {
-	fetch(`/blog/${blogId}`)
-		.then(response => response.json())
-		.then(blog => {
+  fetch(`/blog/${blogId}`)
+    .then(response => response.json())
+    .then(blog => {
       document.getElementById('blog-title').textContent = blog.title;
       document.getElementById('blog-author').textContent = "By: " + blog.author_name;
+      // NEW: Display the blog creation timestamp
+      document.getElementById('blog-timestamp').textContent = "Posted on: " + new Date(blog.created_at).toLocaleString();
       document.getElementById('blog-content').textContent = blog.content;
       loadComments();
-  })
-  
-  
-		.catch(err => console.error('Error loading blog:', err));
+    })
+    .catch(err => console.error('Error loading blog:', err));
 }
+
 
 // Fetch and display comments
 function loadComments() {
   fetch(`/blog/${blogId}/comments`)
       .then(response => response.json())
       .then(comments => {
-          const commentsList = document.getElementById('comments-list');
-          commentsList.innerHTML = comments.map(comment => {
-              let actions = "";
-              // Check if the logged-in user (currentUserId) is the owner of this comment
-              if (window.currentUserId && comment.user_id === window.currentUserId) {
-                  actions = `<button class="button edit-comment" data-id="${comment.id}">Edit</button>
-                             <button class="button button1 delete-comment" data-id="${comment.id}">Delete</button>`;
-              }
-              return `
-                  <div class="comment-card">
-                      <p>${comment.content}</p>
-                      <small>Posted on ${new Date(comment.created_at).toLocaleDateString()} by User ${comment.user_id}</small>
-                      ${actions}
-                  </div>
-              `;
-          }).join('');
+        const commentsList = document.getElementById('comments-list');
+        commentsList.innerHTML = comments.map(comment => {
+            let actions = "";
+            // Check if the logged-in user (currentUserId) is the owner of this comment
+            if (window.currentUserId && comment.user_id === window.currentUserId) {
+                actions = `<button class="button edit-comment" data-id="${comment.id}">Edit</button>
+                           <button class="button button1 delete-comment" data-id="${comment.id}">Delete</button>`;
+            }
+            return `
+                <div class="comment-card">
+                    <p>${comment.content}</p>
+                    <small>Posted on ${new Date(comment.created_at).toLocaleDateString()} by ${comment.commenter_name}</small>
+                    ${actions}
+                </div>
+            `;
+        }).join('');
           
           // Attach event listeners for editing comments
           document.querySelectorAll('.edit-comment').forEach(button => {

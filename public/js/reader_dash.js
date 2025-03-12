@@ -11,10 +11,11 @@ function loadBlogs() {
                 blogElement.className = 'blog-card'; 
                 blogElement.innerHTML = `
     				<div class="blog-content">
-        			<h3>${blog.title}</h3>
-        			<p>By: ${blog.author_name}</p>
-        			<p>${blog.content.substring(0, 150)}...</p>
-        			<button class="read-more-btn" onclick="window.location.href='/blog.html?id=${blog.id}'">Read More</button>
+        				<h3>${blog.title}</h3>
+        				<p>By: ${blog.author_name}</p>
+        				<p>Posted on: ${new Date(blog.created_at).toLocaleDateString()}</p>
+        				<p>${blog.content.substring(0, 150)}...</p>
+        				<button class="read-more-btn" onclick="window.location.href='/blog.html?id=${blog.id}'">Read More</button>
     				</div>`;
 
                 blogsList.appendChild(blogElement);

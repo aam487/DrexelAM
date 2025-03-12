@@ -43,8 +43,15 @@ router.get('/all', (req, res) => {
 // get a blog by ID
 router.get('/:id(\\d+)', (req, res) => {
   const blogId = req.params.id;
-
-  db.db.get("SELECT * FROM blogs WHERE id = ?", [blogId], (err, blog) => {
+  
+  const query = `
+    SELECT b.*, u.name AS author_name
+    FROM blogs b 
+    JOIN users u ON b.author_id = u.id
+    WHERE b.id = ?
+  `;
+  
+  db.db.get(query, [blogId], (err, blog) => {
       if (err || !blog) {
           return res.status(404).json({ error: 'Blog not found.' });
       }
@@ -53,17 +60,25 @@ router.get('/:id(\\d+)', (req, res) => {
 });
 
 
-// Get comments for specific blog by ID
+
+// Get comments for specific blog by ID (with commenter name)
 router.get('/:id(\\d+)/comments', (req, res) => {
   const blogId = req.params.id;
-
-  db.db.all("SELECT * FROM comments WHERE blog_id = ? ORDER BY created_at DESC", [blogId], (err, comments) => {
-      if (err) {
-          return res.status(500).json({ error: 'Error fetching comments.' });
-      }
-      res.json(comments);
+  const query = `
+    SELECT c.*, u.name AS commenter_name
+    FROM comments c
+    JOIN users u ON c.user_id = u.id
+    WHERE c.blog_id = ?
+    ORDER BY c.created_at DESC
+  `;
+  db.db.all(query, [blogId], (err, comments) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error fetching comments.' });
+    }
+    res.json(comments);
   });
 });
+
 
 
 // POST /blog/create - Create a new blog post (authors only)
