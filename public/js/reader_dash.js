@@ -1,23 +1,31 @@
 // public/js/reader_dash.js
 // Fetch and display blogs, blogs are clickable to expand the view in new page
 function loadBlogs() {
-    fetch('/blog/all')
+    fetch('/blog/all?sort=both')
         .then(response => response.json())
         .then(blogs => {
             const blogsList = document.getElementById('blogs-list');
+            blogsList.innerHTML = ""; // Clear existing blogs
             blogs.forEach(blog => {
                 const blogElement = document.createElement('div');
                 blogElement.className = 'blog-card'; 
                 blogElement.innerHTML = `
-                    <div class="blog-content">
-                        <h3>${blog.title}</h3>
-                        <p>${blog.content.substring(0, 150)}...</p>
-                        <button class="read-more-btn" onclick="window.location.href='/blog.html?id=${blog.id}'">Read More</button>
-                    </div>`;
+    				<div class="blog-content">
+        			<h3>${blog.title}</h3>
+        			<p>By: ${blog.author_name}</p>
+        			<p>${blog.content.substring(0, 150)}...</p>
+        			<button class="read-more-btn" onclick="window.location.href='/blog.html?id=${blog.id}'">Read More</button>
+    				</div>`;
+
                 blogsList.appendChild(blogElement);
             });
+        })
+        .catch(err => {
+            console.error('Error loading blogs:', err);
+            alert('Error loading blogs: ' + err.message);
         });
 }
+
 
 // add a comment to the blog
 function showCommentForm(blog_id) {

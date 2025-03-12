@@ -7,10 +7,13 @@ function loadBlogDetails() {
 	fetch(`/blog/${blogId}`)
 		.then(response => response.json())
 		.then(blog => {
-			document.getElementById('blog-title').textContent = blog.title;
-			document.getElementById('blog-content').textContent = blog.content;
-			loadComments();
-		})
+      document.getElementById('blog-title').textContent = blog.title;
+      document.getElementById('blog-author').textContent = "By: " + blog.author_name;
+      document.getElementById('blog-content').textContent = blog.content;
+      loadComments();
+  })
+  
+  
 		.catch(err => console.error('Error loading blog:', err));
 }
 

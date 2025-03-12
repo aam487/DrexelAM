@@ -12,17 +12,21 @@ function isAuthenticated(req, res, next) {
   res.redirect('/auth/login');
 }
 
-// GET /blog/all - Retrieve all blogs with optional sorting
+
+// GET /blog/all - Retrieve all blogs with optional sorting and author name
 router.get('/all', (req, res) => {
   const sort = req.query.sort;
   let query = `
-    SELECT b.*, COUNT(c.id) AS commentCount 
+    SELECT b.*, u.name AS author_name, COUNT(c.id) AS commentCount 
     FROM blogs b 
     LEFT JOIN comments c ON b.id = c.blog_id 
+    JOIN users u ON b.author_id = u.id 
     GROUP BY b.id 
   `;
   if (sort === 'comments') {
     query += "ORDER BY commentCount DESC";
+  } else if (sort === 'both') {
+    query += "ORDER BY commentCount DESC, b.created_at DESC";
   } else {
     query += "ORDER BY b.created_at DESC";
   }
@@ -33,6 +37,8 @@ router.get('/all', (req, res) => {
     res.json(rows);
   });
 });
+
+
 
 // get a blog by ID
 router.get('/:id(\\d+)', (req, res) => {
@@ -51,7 +57,7 @@ router.get('/:id(\\d+)', (req, res) => {
 router.get('/:id(\\d+)/comments', (req, res) => {
   const blogId = req.params.id;
 
-  db.db.all("SELECT * FROM comments WHERE blog_id = ?", [blogId], (err, comments) => {
+  db.db.all("SELECT * FROM comments WHERE blog_id = ? ORDER BY created_at DESC", [blogId], (err, comments) => {
       if (err) {
           return res.status(500).json({ error: 'Error fetching comments.' });
       }
