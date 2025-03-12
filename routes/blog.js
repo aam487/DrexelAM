@@ -175,18 +175,33 @@ router.post('/comment/delete/:id', isAuthenticated, (req, res) => {
   });
 });
 
-// GET /blog/author - Retrieve blogs for the logged-in author
+
+// GET /blog/author - Retrieve blogs for the logged-in author with optional sorting
 router.get('/author', isAuthenticated, (req, res) => {
   const author_id = req.session.user.id;
-  db.db.all(
-    "SELECT * FROM blogs WHERE author_id = ? ORDER BY created_at DESC",
-    [author_id],
-    (err, rows) => {
-      if (err) return res.status(500).json({ error: 'Error retrieving blogs.' });
-      res.json(rows);
-    }
-  );
+  const sort = req.query.sort || 'date';
+  let query = "";
+  let params = [author_id];
+  
+  if (sort === 'comments') {
+    query = `
+      SELECT b.*, COUNT(c.id) AS commentCount 
+      FROM blogs b 
+      LEFT JOIN comments c ON b.id = c.blog_id 
+      WHERE b.author_id = ?
+      GROUP BY b.id
+      ORDER BY commentCount DESC
+    `;
+  } else { // default sort by date
+    query = "SELECT * FROM blogs WHERE author_id = ? ORDER BY created_at DESC";
+  }
+  
+  db.db.all(query, params, (err, rows) => {
+    if (err) return res.status(500).json({ error: 'Error retrieving blogs.' });
+    res.json(rows);
+  });
 });
+
 
 // POST /blog/comment/edit/:id - Edit a comment (only if it belongs to the logged-in user)
 router.post('/comment/edit/:id', isAuthenticated, (req, res) => {

@@ -30,11 +30,10 @@ document.getElementById('create-blog-form').addEventListener('submit', function 
 });
 
 // function to load the blogs on the author dashboard, blogs are clickable to expand view
-function loadBlogs() {
-    fetch('/blog/author', { credentials: 'same-origin' })
+function loadBlogs(sortOption = 'date') {
+    fetch('/blog/author?sort=' + sortOption, { credentials: 'same-origin' })
         .then(response => {
             if (!response.ok) {
-                // If not OK, get the text (which might be HTML or error message)
                 return response.text().then(text => { throw new Error(text); });
             }
             return response.json();
@@ -50,17 +49,16 @@ function loadBlogs() {
                 const blogElement = document.createElement('div');
                 blogElement.className = 'blog-card'; 
                 blogElement.innerHTML = `
-    			<div class="blog-content">
-        			<h3>${blog.title}</h3>
-        			<p>${blog.content.substring(0, 150)}...</p>
-        			<p>Posted on: ${new Date(blog.created_at).toLocaleDateString()}</p>
-        			<button class="read-more-btn" onclick="window.location.href='/blog.html?id=${blog.id}'">Read More</button>
-    			</div>
-    			<div class="blog-actions">
-        			<button class="button edit-blog" data-id="${blog.id}">Edit</button>
-        			<button class="button button1 delete-blog" data-id="${blog.id}">Delete</button>
-    			</div>`;
-
+                    <div class="blog-content">
+                        <h3>${blog.title}</h3>
+                        <p>${blog.content.substring(0, 150)}...</p>
+                        <p>Posted on: ${new Date(blog.created_at).toLocaleDateString()}</p>
+                        <button class="read-more-btn" onclick="window.location.href='/blog.html?id=${blog.id}'">Read More</button>
+                    </div>
+                    <div class="blog-actions">
+                        <button class="button edit-blog" data-id="${blog.id}">Edit</button>
+                        <button class="button button1 delete-blog" data-id="${blog.id}">Delete</button>
+                    </div>`;
                 blogsList.appendChild(blogElement);
             });
             
@@ -80,7 +78,7 @@ function loadBlogs() {
                         .then(response => {
                             if (response.ok) {
                                 alert('Blog updated successfully!');
-                                loadBlogs();
+                                loadBlogs(currentSort);
                             } else {
                                 response.text().then(text => alert('Error updating blog: ' + text));
                             }
@@ -101,7 +99,7 @@ function loadBlogs() {
                         .then(response => {
                             if (response.ok) {
                                 alert('Blog deleted successfully!');
-                                loadBlogs();
+                                loadBlogs(currentSort);
                             } else {
                                 response.text().then(text => alert('Error deleting blog: ' + text));
                             }
@@ -119,6 +117,7 @@ function loadBlogs() {
 
 
 
+
 // logout button
 const logoutBtn = document.getElementById("logout");
 logoutBtn.addEventListener("click", (e) => {
@@ -131,4 +130,21 @@ document.getElementById('cancel-blog').addEventListener('click', () => {
 });
 
 // load the blogs on dashboard
-loadBlogs();
+// Set the initial sort option to 'date'
+let currentSort = 'date';
+
+// Load blogs initially with the default sort
+loadBlogs(currentSort);
+
+// Add event listener for the dynamic sort toggle button
+document.getElementById('sort-toggle').addEventListener('click', function() {
+    if (currentSort === 'date') {
+        currentSort = 'comments';
+        this.textContent = 'Sort by Date';
+    } else {
+        currentSort = 'date';
+        this.textContent = 'Sort by Comments';
+    }
+    loadBlogs(currentSort);
+});
+
