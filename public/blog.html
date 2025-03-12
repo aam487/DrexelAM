@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title for blog details page -->
     <title>Blog Details - BlogHub</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <!-- Container for blog details: title, author, timestamp, and content -->
     <div class="container">
         <div class="blog-detail-container">
             <h1 id="blog-title"></h1>
             <p id="blog-author"></p>
             <p id="blog-timestamp"></p>
             <div id="blog-content"></div>
-
             
-            <!-- Comments section -->
+            <!-- Comments section with list of comments on blog -->
             <div class="comment-section">
                 <h3>Comments</h3>
                 <div id="comments-list"></div>
@@ -26,6 +27,7 @@
                     <form id="add-comment-form">
                         <textarea id="comment-content" placeholder="Write your comment..."></textarea>
                         <div class="action-buttons">
+                            <!-- Submit or cancel comment -->
                             <button type="submit" class="button">Submit</button>
                             <button type="button" id="cancel-comment" class="button1">Cancel</button>
                         </div>
@@ -35,6 +37,7 @@
             </div>
             
             <div class="blog-actions">
+                <!-- Back button to return to dashboard -->
                 <button class="button1" onclick="history.back()">Back</button>
             </div>
         </div>
