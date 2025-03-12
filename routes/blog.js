@@ -13,7 +13,6 @@ function isAuthenticated(req, res, next) {
 }
 
 // GET /blog/all - Retrieve all blogs with optional sorting
-
 router.get('/all', (req, res) => {
   const sort = req.query.sort;
   let query = `
@@ -35,21 +34,28 @@ router.get('/all', (req, res) => {
   });
 });
 
-// GET /blog/:id - Retrieve and display a single blog post along with its comments
+// get a blog by ID
 router.get('/:id', (req, res) => {
-  const blogId = req.params.id;
-  db.db.get("SELECT * FROM blogs WHERE id = ?", [blogId], (err, blog) => {
-    if (err || !blog) {
-      return res.status(404).send('Blog not found.');
-    }
-    // Retrieve comments for the blog using helper function
-    db.getComments(blogId, (err, comments) => {
-      if (err) {
-        return res.status(500).send('Error retrieving comments.');
-      }
-      res.json({ blog, comments });
+    const blogId = req.params.id;
+
+    db.db.get("SELECT * FROM blogs WHERE id = ?", [blogId], (err, blog) => {
+        if (err || !blog) {
+            return res.status(404).json({ error: 'Blog not found.' });
+        }
+        res.json(blog);
     });
-  });
+});
+
+// Get comments for specific blog by ID
+router.get('/:id/comments', (req, res) => {
+    const blogId = req.params.id;
+
+    db.db.all("SELECT * FROM comments WHERE blog_id = ?", [blogId], (err, comments) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error fetching comments.' });
+        }
+        res.json(comments);
+    });
 });
 
 // POST /blog/create - Create a new blog post (authors only)
@@ -108,7 +114,6 @@ router.post('/delete/:id', isAuthenticated, (req, res) => {
 });
 
 // POST /blog/comment - Add a comment to a blog post
-
 router.post('/comment', isAuthenticated, (req, res) => {
   const { blog_id, content } = req.body;
   // Check if the blog exists
