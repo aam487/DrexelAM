@@ -1,60 +1,72 @@
 // public/js/reader_dash.js
-// Fetch and display blogs
+// Fetch and display blogs, blogs are clickable to expand the view in new page
 function loadBlogs() {
-	fetch('/blog/all')
-		.then(response => response.json())
-		.then(blogs => {
-			const blogsList = document.getElementById('blogs-list');
-			blogs.forEach(blog => {
-				const blogElement = document.createElement('div');
-                blogElement.className = 'blog-card'; // Add class for consistent styling
-				blogElement.innerHTML = `
-				<div class="blog-content">
+    fetch('/blog/all')
+        .then(response => response.json())
+        .then(blogs => {
+            const blogsList = document.getElementById('blogs-list');
+            blogs.forEach(blog => {
+                const blogElement = document.createElement('div');
+                blogElement.className = 'blog-card'; 
+                blogElement.innerHTML = `
+                    <div class="blog-content">
                         <h3>${blog.title}</h3>
                         <p>${blog.content.substring(0, 150)}...</p>
-						<button onclick="showCommentForm(${blog.id})">Add Comment</button> 
-                        <button class="read-more-btn" onclick="window.location.href='/blog/${blog.id}'">Read More</button>
-                    </div>` ;
-				blogsList.appendChild(blogElement);
-			});
-		});
+                        <button class="read-more-btn" onclick="window.location.href='/blog.html?id=${blog.id}'">Read More</button>
+                    </div>`;
+                blogsList.appendChild(blogElement);
+            });
+        });
 }
 
-        function showCommentForm(blog_id) {
-            document.getElementById('comment-form').style.display = 'block';
-            document.getElementById('add-comment-form').setAttribute('data-blog-id', blog_id);
-        }
-		loadBlogs();
-		document.getElementById('add-comment-form')?.addEventListener('submit', function (event) {
-			event.preventDefault();
-		
-			const content = document.getElementById('comment-content').value;
-			const blog_id = document.getElementById('add-comment-form').getAttribute('data-blog-id');
-		
-			// Check if content or blogId is invalid
-			if (!content || !blog_id) {
-				alert('Please provide valid content and blog ID');
-				return;
-			}
-		
-			fetch('/blog/comment', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ blog_id, content })
-			})
-			.then(response => {
-				if (response.ok) {
-					alert('Comment created successfully');
-					window.location.reload();
-				} else {
-					alert('Error creating comment');
-				}
-			})
-			.catch(error => {
-				console.error('Error:', error);
-				alert('Failed to create comment. Please try again later.');
-			});
-		});
+// add a comment to the blog
+function showCommentForm(blog_id) {
+	document.getElementById('comment-form').style.display = 'block';
+	document.getElementById('add-comment-form').setAttribute('data-blog-id', blog_id);
+}
+
+// add listener for creating a comment
+document.getElementById('add-comment-form')?.addEventListener('submit', function (event) {
+	event.preventDefault();
+	
+	// get the content and blog id
+	const content = document.getElementById('comment-content').value;
+	const blog_id = document.getElementById('add-comment-form').getAttribute('data-blog-id');
+
+	// Check if content or blogId is invalid
+	if (!content || !blog_id) {
+		alert('Please provide valid content and blog ID');
+		return;
+	}
+
+	// post comment through comment blog route
+	fetch('/blog/comment', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ blog_id, content })
+	})
+	.then(response => {
+		if (response.ok) {
+			alert('Comment created successfully');
+			window.location.reload();
+		} else {
+			alert('Error creating comment');
+		}
+	})
+	.catch(error => {
+		console.error('Error:', error);
+		alert('Failed to create comment. Please try again later.');
+	});
+});
+
+// logout button
+const logoutBtn = document.getElementById("logout");
+logoutBtn.addEventListener("click", (e) => {
+e.preventDefault();
+window.location.href = "/auth/logout";
+});
+
+// load the blogs on reader dashboard
 loadBlogs();
