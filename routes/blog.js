@@ -35,28 +35,30 @@ router.get('/all', (req, res) => {
 });
 
 // get a blog by ID
-router.get('/:id', (req, res) => {
-    const blogId = req.params.id;
+router.get('/:id(\\d+)', (req, res) => {
+  const blogId = req.params.id;
 
-    db.db.get("SELECT * FROM blogs WHERE id = ?", [blogId], (err, blog) => {
-        if (err || !blog) {
-            return res.status(404).json({ error: 'Blog not found.' });
-        }
-        res.json(blog);
-    });
+  db.db.get("SELECT * FROM blogs WHERE id = ?", [blogId], (err, blog) => {
+      if (err || !blog) {
+          return res.status(404).json({ error: 'Blog not found.' });
+      }
+      res.json(blog);
+  });
 });
+
 
 // Get comments for specific blog by ID
-router.get('/:id/comments', (req, res) => {
-    const blogId = req.params.id;
+router.get('/:id(\\d+)/comments', (req, res) => {
+  const blogId = req.params.id;
 
-    db.db.all("SELECT * FROM comments WHERE blog_id = ?", [blogId], (err, comments) => {
-        if (err) {
-            return res.status(500).json({ error: 'Error fetching comments.' });
-        }
-        res.json(comments);
-    });
+  db.db.all("SELECT * FROM comments WHERE blog_id = ?", [blogId], (err, comments) => {
+      if (err) {
+          return res.status(500).json({ error: 'Error fetching comments.' });
+      }
+      res.json(comments);
+  });
 });
+
 
 // POST /blog/create - Create a new blog post (authors only)
 router.post('/create', isAuthenticated, (req, res) => {
@@ -151,5 +153,40 @@ router.post('/comment/delete/:id', isAuthenticated, (req, res) => {
     });
   });
 });
+
+// GET /blog/author - Retrieve blogs for the logged-in author
+router.get('/author', isAuthenticated, (req, res) => {
+  const author_id = req.session.user.id;
+  db.db.all(
+    "SELECT * FROM blogs WHERE author_id = ? ORDER BY created_at DESC",
+    [author_id],
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: 'Error retrieving blogs.' });
+      res.json(rows);
+    }
+  );
+});
+
+// POST /blog/comment/edit/:id - Edit a comment (only if it belongs to the logged-in user)
+router.post('/comment/edit/:id', isAuthenticated, (req, res) => {
+  const commentId = req.params.id;
+  const { content } = req.body;
+  db.db.get("SELECT * FROM comments WHERE id = ?", [commentId], (err, comment) => {
+    if (err || !comment) {
+      return res.status(404).send('Comment not found.');
+    }
+    if (comment.user_id !== req.session.user.id) {
+      return res.status(403).send('Not authorized to edit this comment.');
+    }
+    const query = "UPDATE comments SET content = ? WHERE id = ?";
+    db.db.run(query, [content, commentId], function(err) {
+      if (err) {
+        return res.status(500).send('Error updating comment.');
+      }
+      res.json({ success: true });
+    });
+  });
+});
+
 
 module.exports = router;

@@ -24,10 +24,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 const authRoutes = require('./routes/auth');
 const blogRoutes = require('./routes/blog');
 const profileRoutes = require('./routes/profile');
+const sessionRoutes = require('./routes/session');
+
 
 app.use('/auth', authRoutes);
 app.use('/blog', blogRoutes);
 app.use('/profile', profileRoutes);
+app.use('/session', sessionRoutes);
 
 // New route: If user is logged in, serve blog.html as the dashboard/blog page.
 app.get('/blog', (req, res) => {

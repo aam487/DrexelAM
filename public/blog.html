@@ -22,9 +22,13 @@
                     <h4>Add a Comment</h4>
                     <form id="add-comment-form">
                         <textarea id="comment-content" placeholder="Write your comment..."></textarea>
-                        <button type="submit" class="button">Submit</button>
+                        <div class="action-buttons">
+                            <button type="submit" class="button">Submit</button>
+                            <button type="button" id="cancel-comment" class="button1">Cancel</button>
+                        </div>
                     </form>
                 </div>
+                
             </div>
             
             <div class="blog-actions">
@@ -33,5 +37,15 @@
         </div>
     </div>
     <script src="/js/blog.js"></script>
+    <script>
+        // Fetch the session info from the server and store the user ID in a global variable
+        fetch('/session/info', { credentials: 'same-origin' })
+          .then(response => response.json())
+          .then(data => {
+            window.currentUserId = data.userId;
+          })
+          .catch(err => console.error('Error retrieving session info:', err));
+      </script>
+      
 </body>
 </html>

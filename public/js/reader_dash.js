@@ -68,5 +68,12 @@ e.preventDefault();
 window.location.href = "/auth/logout";
 });
 
+document.getElementById('cancel-comment')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('comment-content').value = "";
+    // Optionally hide the comment form if that is desired:
+    document.getElementById('comment-form').style.display = 'none';
+});
+
 // load the blogs on reader dashboard
 loadBlogs();
