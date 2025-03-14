@@ -5,6 +5,7 @@
     padding: 0;
   }
   
+/* Style for body */
   body {
     background-color: #EACBD2; 
     background-image: linear-gradient(135deg, #EACBD2 0%, #f8dfe5 100%);
@@ -18,7 +19,8 @@
     flex-direction: column;
     align-items: center;
   }
-  
+
+/* Container style */
   .container {
     width: 100%;
     max-width: 1200px;
@@ -73,7 +75,8 @@
     margin: 0 auto;
     padding: 20px;
   }
-  
+
+/* Style for input, select and textarea */
   input, select, textarea {
     font-size: 1rem;
     padding: 12px;
@@ -117,7 +120,8 @@
     display: block;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
+
+/* Button state styles */
   button:hover {
     background-color: #F082AC;
     transform: translateY(-2px);
@@ -186,7 +190,8 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: auto;
   }
-  
+
+/* Blog card style */
   .blog-card {
     background-color: white;
     border-radius: 12px;
