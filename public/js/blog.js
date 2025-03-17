@@ -4,18 +4,18 @@ const blogId = urlParams.get('id');
 
 // Fetch and display blog details
 function loadBlogDetails() {
-  fetch(`/blog/${blogId}`)
-    .then(response => response.json())
-    .then(blog => {
-      document.getElementById('blog-title').textContent = blog.title;
-      document.getElementById('blog-author').textContent = "By: " + blog.author_name;
-      // NEW: Display the blog creation timestamp
-      document.getElementById('blog-timestamp').textContent = "Posted on: " + new Date(blog.created_at).toLocaleString();
-      document.getElementById('blog-content').textContent = blog.content;
-      loadComments();
-    })
-    .catch(err => console.error('Error loading blog:', err));
-}
+    fetch(`/blog/${blogId}`)
+      .then(response => response.json())
+      .then(blog => {
+        document.getElementById('blog-title').textContent = blog.title;
+        document.getElementById('blog-author').textContent = "By: " + blog.author_name;
+        // Use innerHTML so that HTML content (images, hyperlinks, etc.) is rendered properly
+        document.getElementById('blog-content').innerHTML = blog.content;
+        loadComments();
+      })
+      .catch(err => console.error('Error loading blog:', err));
+  }
+  
 
 
 // Fetch and display comments
